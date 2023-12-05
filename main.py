@@ -3,7 +3,7 @@ import os
 import keyboard
 
 BOARD_LENGTH: int = 4
-nb_tiles : int = 2
+nb_tiles : int = 1
 
 # Création des lignes et des colonnes
 def GetBoard() -> list[list[str]]:
@@ -43,8 +43,8 @@ def full_board(board: list[list[str]]) -> bool:
     for row in board:
         for sign in row:
             if sign == ".":
-                return False  # S'il y a une case vide, la grille n'est pas pleine
-    return True  # Si aucune case vide n'est trouvée, la grille est pleine
+                return False  
+    return True  
 
 def move_up (board) -> str:
     for j in range(BOARD_LENGTH):
@@ -117,6 +117,7 @@ def game():
     board = GetBoard()
     while True:
         os.system('cls')
+        
 
         if full_board(board) and test_movement(board):
             print("Vous avez perdu")
@@ -125,19 +126,23 @@ def game():
         
         spawn_tile(board)
         show_board(board)
-        while True:
-            if keyboard.is_pressed("z") :
+        while True :
+
+            if not keyboard.wait("z"):
                 move_up(board)
                 break
-            if keyboard.is_pressed("q") :
+                
+            if not keyboard.wait("q"):
                 move_left(board)
                 break
-            if keyboard.is_pressed("s") :
+                
+
+            if not keyboard.wait("s"):
                 move_down(board)
                 break
-            if keyboard.is_pressed("d") :
+                
+            if not keyboard.wait("d"):
                 move_right(board)
                 break
-        
-        break
 game()
+
