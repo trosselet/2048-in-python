@@ -1,6 +1,7 @@
 import random
 import os
 import keyboard
+import time
 
 BOARD_LENGTH: int = 4
 nb_tiles : int = 1
@@ -26,7 +27,7 @@ def ask_input(message: str, authorized_inputs: list) -> str:
 
 def show_board(board: list[list[str]]) -> None:
     for row in board:
-        print(" ".join(str(sign) for sign in row))
+        print("    ".join(str(sign) for sign in row))
 
 def spawn_tile(board: list[list[str]]) -> tuple[int,int]:
     for _ in range(nb_tiles) :
@@ -114,11 +115,11 @@ def test_movement(board):
     return True
 
 def game():
+    
     board = GetBoard()
     while True:
         os.system('cls')
         
-
         if full_board(board) and test_movement(board):
             print("Vous avez perdu")
             show_board(board)
@@ -126,23 +127,26 @@ def game():
         
         spawn_tile(board)
         show_board(board)
+        time.sleep(0.5)
+        
         while True :
-
-            if not keyboard.wait("z"):
+            event = keyboard.read_event()
+            
+            if event.event_type == keyboard.KEY_DOWN and event.name == "z":
                 move_up(board)
                 break
                 
-            if not keyboard.wait("q"):
+            if event.event_type == keyboard.KEY_DOWN and event.name == "q":
                 move_left(board)
                 break
                 
-
-            if not keyboard.wait("s"):
+            if event.event_type == keyboard.KEY_DOWN and event.name == "s":
                 move_down(board)
                 break
                 
-            if not keyboard.wait("d"):
+            if event.event_type == keyboard.KEY_DOWN and event.name == "d":
                 move_right(board)
                 break
+            
 game()
 
