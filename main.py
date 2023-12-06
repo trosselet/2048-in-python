@@ -4,7 +4,7 @@ import keyboard
 import time
 
 BOARD_LENGTH: int = 4
-nb_tiles : int = 1
+nb_tiles : int = 2
 
 # Création des lignes et des colonnes
 def GetBoard() -> list[list[str]]:
@@ -47,7 +47,7 @@ def full_board(board: list[list[str]]) -> bool:
                 return False  
     return True  
 
-def move_up (board) -> str:
+def move_up (board) :
     for j in range(BOARD_LENGTH):
         for i in range(1, BOARD_LENGTH):
             if board[i][j] != ".":
@@ -131,7 +131,7 @@ def game():
         
         while True :
             event = keyboard.read_event()
-            
+
             if event.event_type == keyboard.KEY_DOWN and event.name == "z":
                 move_up(board)
                 break
@@ -147,6 +147,7 @@ def game():
             if event.event_type == keyboard.KEY_DOWN and event.name == "d":
                 move_right(board)
                 break
-            
-game()
 
+
+if __name__ == "__main__":
+    game()
