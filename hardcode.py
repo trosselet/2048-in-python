@@ -1,44 +1,5 @@
 from main import move_up,move_right,move_left,move_down,BOARD_LENGTH, show_board
 
-
-
-
-#Schema de déplacement au 2048
-grid_custom: list[list[str]] = [
-        ["16", ".", ".", "."],
-        [".", "4096", "4", "."],
-        [".", ".", "1024", "."],
-        [".", "2048", "32", "."]
-    ]
-
-grid_custom_up: list[list[str]] = [
-        ["16", "4096", "4", "."],
-        [".",  "2048", "1024", "."],
-        [".", ".",     "32", "."],
-        [".", ".", ".", "."]
-    ]
-
-grid_custom_right: list[list[str]] = [
-        ["32", "2048", ".", "."],
-        ["1024", ".", ".", "."],
-        ["4", "4096", ".", "."],
-        ["16", ".", ".", "."]
-    ]
-
-grid_custom_left: list[list[str]] = [
-        ["2048", "1024", "4096", "16"],
-        ["32", ".", "4", "."],
-        [".", ".", ".", "."],
-        [".", ".", ".", "."]
-    ]
-
-grid_custom_down: list[list[str]] = [
-        [".", "32", "2048", "16"],
-        [".", "1024", "4096", "."],
-        [".", "4", ".", "."],
-        [".", ".", ".", "."]
-    ]
-
 def rotation_matrice(matrice: list[list[str]]) -> list[list[str]]:
 
     lignes: int = len(matrice)
@@ -54,42 +15,32 @@ def rotation_matrice(matrice: list[list[str]]) -> list[list[str]]:
 
     return matrice_rotatee
 
+grid_custom =  [
+    [".",".",".","2"],
+    [".",".",".","2"],
+    [".",".",".","2"],
+    [".",".",".","2"],
+]
 
-def compare(move: list[list[str]]) -> None:
-    resultat = rotation_matrice(grid_custom)
-    if move == grid_custom_right or move == grid_custom_down:
-        right = rotation_matrice(resultat)
-        if right == move:
-            print("TEST SUCCESS")
-        else:
-            print("TEST FAILURE")
-        show_board(right)
 
-    elif resultat == move:
+grid_expected =  [
+    ["2",".",".","."],
+    ["2",".",".","."],
+    ["2",".",".","."],
+    ["2",".",".","."],
+]
+
+
+func = [move_left, move_up, move_right, move_down]
+
+for i in range(0, 4) :
+    func[i](grid_custom)
+    if grid_custom == grid_expected :
         print("TEST SUCCESS")
-        show_board(resultat)
-    else:
-        print("TEST FAILURE")
-        show_board(resultat)
+    else :
+        print("TEST FAILED")
+    #rotation 90 grid
+    grid_custom = rotation_matrice(grid_custom)
+    #rotation 90 expected_result
+    grid_expected = rotation_matrice(grid_expected)
 
-
-def rotate(move: str) -> None:
-    if move == "right":
-        move_right(grid_custom)
-        compare(grid_custom_right)
-    if move == "left":
-        move_left(grid_custom)
-        compare(grid_custom_left)
-    if move == "down":
-        move_down(grid_custom)
-        compare(grid_custom_down)
-    if move == "up":
-        move_up(grid_custom)
-        if grid_custom == grid_custom_up:
-            print("TEST SUCCESS")
-        else:
-            print("TEST FAILURE")
-        show_board(grid_custom)
-
-
-rotate("right")
