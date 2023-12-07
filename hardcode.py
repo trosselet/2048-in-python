@@ -1,4 +1,4 @@
-from main import move_up,move_right,move_left,move_down,BOARD_LENGTH, show_board
+from main import move_up,move_right,move_left,move_down
 
 def rotation_matrice(matrice: list[list[str]]) -> list[list[str]]:
 
