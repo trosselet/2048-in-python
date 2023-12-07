@@ -1,53 +1,52 @@
 import random
-import os
 import keyboard
 import time
 
 BOARD_LENGTH: int = 4
-nb_tiles : int = 2
+nb_tiles: int = 2
 
-# Création des lignes et des colonnes
 def GetBoard() -> list[list[str]]:
     board: list[list[str]] = []
-    length = BOARD_LENGTH
-    for r in range(length) :
-        row = []
-        for c in range(length) :
+    length: int = BOARD_LENGTH
+    for r in range(length):
+        row: list[str] = []
+        for c in range(length):
             row.append(".")
         board.append(row)
     return board
 
-#Verify if Inputs is in authorized_inputs
-def ask_input(message: str, authorized_inputs: list) -> str:
-    while True :
+
+def ask_input(message: str, authorized_inputs: list[str]) -> str:
+    while True:
         answer: str = input(message + str(authorized_inputs) + " : ")
-        
-        if answer in authorized_inputs :
+        if answer in authorized_inputs:
             return answer
 
 def show_board(board: list[list[str]]) -> None:
     for row in board:
         print("    ".join(str(sign) for sign in row))
 
-def spawn_tile(board: list[list[str]]) -> tuple[int,int]:
-    for _ in range(nb_tiles) :
-        empty_spots: list[tuple[int, int]] = [(i, j) for i in range(len(board)) for j in range(len(board)) if board[i][j] == "."]
-        if len(empty_spots) > 0 :
-            position : tuple[int,int]= random.choice(empty_spots)
-            tile : int = random.randint(1,10)
-            if tile == 10 :
+def spawn_tile(board: list[list[str]]) -> None:
+    for _ in range(nb_tiles):
+        empty_spots: list[tuple[int, int]] = [
+            (i, j) for i in range(len(board)) for j in range(len(board)) if board[i][j] == "."
+        ]
+        if len(empty_spots) > 0:
+            position: tuple[int, int] = random.choice(empty_spots)
+            tile: int = random.randint(1, 10)
+            if tile == 10:
                 board[position[0]][position[1]] = str("4")
-            else :
+            else:
                 board[position[0]][position[1]] = str("2")
 
 def full_board(board: list[list[str]]) -> bool:
     for row in board:
         for sign in row:
             if sign == ".":
-                return False  
-    return True  
+                return False
+    return True
 
-def move_up (board) :
+def move_up(board: list[list[str]]) -> None:
     for j in range(BOARD_LENGTH):
         for i in range(1, BOARD_LENGTH):
             if board[i][j] != ".":
@@ -61,7 +60,7 @@ def move_up (board) :
                         break
                     i -= 1
 
-def move_right(board) :
+def move_right(board: list[list[str]]) -> None:
     for i in range(BOARD_LENGTH):
         for j in range(BOARD_LENGTH - 2, -1, -1):
             if board[i][j] != ".":
@@ -75,7 +74,7 @@ def move_right(board) :
                         break
                     j += 1
 
-def move_down(board) :
+def move_down(board: list[list[str]]) -> None:
     for j in range(BOARD_LENGTH):
         for i in range(BOARD_LENGTH - 2, -1, -1):
             if board[i][j] != ".":
@@ -89,7 +88,7 @@ def move_down(board) :
                         break
                     i += 1
 
-def move_left(board) :
+def move_left(board: list[list[str]]) -> None:
     for i in range(BOARD_LENGTH):
         for j in range(1, BOARD_LENGTH):
             if board[i][j] != ".":
@@ -103,23 +102,21 @@ def move_left(board) :
                         break
                     j -= 1
 
-def test_movement(board):
-    for i in range(BOARD_LENGTH) :
-        for j in range(BOARD_LENGTH) :
-            if i+1 != 4 :
-                if board[i][j] == board[i+1][j] :
+
+def test_movement(board: list[list[str]]) -> bool:
+    for i in range(BOARD_LENGTH):
+        for j in range(BOARD_LENGTH):
+            if i + 1 != 4:
+                if board[i][j] == board[i + 1][j]:
                     return False
-            if j+1 != 4 :
-                if board[i][j] == board[i][j+1] :
+            if j + 1 != 4:
+                if board[i][j] == board[i][j + 1]:
                     return False
     return True
 
-def game():
-    
-    board = GetBoard()
+def game() -> None:
+    board: list[list[str]] = GetBoard()
     while True:
-        os.system('cls')
-        
         if full_board(board) and test_movement(board):
             print("Vous avez perdu")
             show_board(board)
