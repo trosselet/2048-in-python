@@ -16,13 +16,6 @@ def GetBoard() -> list[list[str]]:
         board.append(row)
     return board
 
-
-def ask_input(message: str, authorized_inputs: list[str]) -> str:
-    while True:
-        answer: str = input(message + str(authorized_inputs) + " : ")
-        if answer in authorized_inputs:
-            return answer
-
 def show_board(board: list[list[str]]) -> None:
     for row in board:
         print("    ".join(str(sign) for sign in row))
@@ -119,6 +112,7 @@ def game() -> None:
     board: list[list[str]] = GetBoard()
     while True:
         os.system("cls")
+        
         if full_board(board) and test_movement(board):
             print("Vous avez perdu")
             show_board(board)
