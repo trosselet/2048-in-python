@@ -1,6 +1,7 @@
 import random
 import keyboard
 import time
+import os
 
 BOARD_LENGTH: int = 4
 nb_tiles: int = 2
@@ -117,6 +118,7 @@ def test_movement(board: list[list[str]]) -> bool:
 def game() -> None:
     board: list[list[str]] = GetBoard()
     while True:
+        os.system("cls")
         if full_board(board) and test_movement(board):
             print("Vous avez perdu")
             show_board(board)
