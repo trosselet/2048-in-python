@@ -64,14 +64,18 @@ def move_right(board: list[list[str]]) -> None:
     for i in range(BOARD_LENGTH):
         for j in range(BOARD_LENGTH - 2, -1, -1):
             if board[i][j] != ".":
-                while j < BOARD_LENGTH - 1 and (board[i][j + 1] == "." or board[i][j + 1] == board[i][j]):
+                while j < BOARD_LENGTH - 1:
                     if board[i][j + 1] == ".":
                         board[i][j + 1] = board[i][j]
                         board[i][j] = "."
-                    elif board[i][j + 1] == board[i][j]:
+                        j += 1
+                        break
+                    
+                    if board[i][j + 1] == board[i][j]:
                         board[i][j + 1] = str(int(board[i][j + 1]) * 2)
                         board[i][j] = "."
                         break
+
                     j += 1
 
 #Fonction pour aller vers le bas
