@@ -6,6 +6,7 @@ import os
 BOARD_LENGTH: int = 4
 nb_tiles: int = 2
 
+#Création du board
 def GetBoard() -> list[list[str]]:
     board: list[list[str]] = []
     length: int = BOARD_LENGTH
@@ -16,10 +17,12 @@ def GetBoard() -> list[list[str]]:
         board.append(row)
     return board
 
+#Apparition du board
 def show_board(board: list[list[str]]) -> None:
     for row in board:
         print("    ".join(str(sign) for sign in row))
 
+#Apparition des tuiles aléatoires
 def spawn_tile(board: list[list[str]]) -> None:
     for _ in range(nb_tiles):
         empty_spots: list[tuple[int, int]] = [
@@ -33,6 +36,7 @@ def spawn_tile(board: list[list[str]]) -> None:
             else:
                 board[position[0]][position[1]] = str("2")
 
+#Vérifie si le tableau est plein
 def full_board(board: list[list[str]]) -> bool:
     for row in board:
         for sign in row:
@@ -40,6 +44,7 @@ def full_board(board: list[list[str]]) -> bool:
                 return False
     return True
 
+#Fonction pour aller vers le haut
 def move_up(board: list[list[str]]) -> None:
     for j in range(BOARD_LENGTH):
         for i in range(1, BOARD_LENGTH):
@@ -54,6 +59,7 @@ def move_up(board: list[list[str]]) -> None:
                         break
                     i -= 1
 
+#Fonction pour aller vers la droite
 def move_right(board: list[list[str]]) -> None:
     for i in range(BOARD_LENGTH):
         for j in range(BOARD_LENGTH - 2, -1, -1):
@@ -68,6 +74,7 @@ def move_right(board: list[list[str]]) -> None:
                         break
                     j += 1
 
+#Fonction pour aller vers le bas
 def move_down(board: list[list[str]]) -> None:
     for j in range(BOARD_LENGTH):
         for i in range(BOARD_LENGTH - 2, -1, -1):
@@ -82,6 +89,7 @@ def move_down(board: list[list[str]]) -> None:
                         break
                     i += 1
 
+#Fonction pour aller vers la gauche
 def move_left(board: list[list[str]]) -> None:
     for i in range(BOARD_LENGTH):
         for j in range(1, BOARD_LENGTH):
@@ -96,7 +104,7 @@ def move_left(board: list[list[str]]) -> None:
                         break
                     j -= 1
 
-
+#Verifie si un mouvement est disponible
 def test_movement(board: list[list[str]]) -> bool:
     for i in range(BOARD_LENGTH):
         for j in range(BOARD_LENGTH):
@@ -108,6 +116,7 @@ def test_movement(board: list[list[str]]) -> bool:
                     return False
     return True
 
+#Main loop
 def game() -> None:
     board: list[list[str]] = GetBoard()
     while True:
